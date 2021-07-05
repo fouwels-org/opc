@@ -26,4 +26,7 @@ RUN cd go && go install .
 FROM alpine:3.14.0
 COPY --from=build /build/out /build/out
 
+RUN addgroup -S opc && adduser -S opc -G opc
+USER opc
+
 CMD ["/build/out/opc"]
