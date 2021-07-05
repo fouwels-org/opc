@@ -52,23 +52,24 @@ jobs:
         run: wget https://github.com/securego/gosec/releases/download/v${{env.GOSEC_VERSION}}/gosec_${{env.GOSEC_VERSION}}_${{env.ARCH}}.tar.gz -O gosec.tar.gz && tar -xzf gosec.tar.gz
 
       - name: Run gosec/MITRE static security scanner (init)
-        run: cd ${GITHUB_WORKSPACE}/init && ${GITHUB_WORKSPACE}/gosec -exclude=G307,G306,G302,G204 ./...
+        run: cd ${GITHUB_WORKSPACE} && ${GITHUB_WORKSPACE}/gosec --exclude-dir=open62541 ./...
 
-  static-check:
-    runs-on: ubuntu-latest
-    name: Code Security (staticcheck)
-    steps:
-      - id: vars
-        run: echo ::set-output name=TAG::${GITHUB_REF##*/}
+  # Disabled, as cannot process CGO
+  # static-check:
+  #   runs-on: ubuntu-latest
+  #   name: Code Security (staticcheck)
+  #   steps:
+  #     - id: vars
+  #       run: echo ::set-output name=TAG::${GITHUB_REF##*/}
 
-      - name: Checkout repo
-        uses: actions/checkout@master
+  #     - name: Checkout repo
+  #       uses: actions/checkout@master
 
-      - name: Downloading and extracting static check ${{env.GOSEC_VERSION}}
-        run: wget https://github.com/dominikh/go-tools/releases/download/${{env.STATICCHECK_VERSION}}/staticcheck_${{env.ARCH}}.tar.gz -O staticcheck.tar.gz && tar -xzf staticcheck.tar.gz
+  #     - name: Downloading and extracting static check ${{env.GOSEC_VERSION}}
+  #       run: wget https://github.com/dominikh/go-tools/releases/download/${{env.STATICCHECK_VERSION}}/staticcheck_${{env.ARCH}}.tar.gz -O staticcheck.tar.gz && tar -xzf staticcheck.tar.gz
 
-      - name: Run static checks (init)
-        run: cd ${GITHUB_WORKSPACE} && ${GITHUB_WORKSPACE}/staticcheck/staticcheck ./...
+  #     - name: Run static checks (init)
+  #       run: cd ${GITHUB_WORKSPACE} && ${GITHUB_WORKSPACE}/staticcheck/staticcheck ./...
 
   licencing:
     runs-on: ubuntu-latest

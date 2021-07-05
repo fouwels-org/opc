@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
+#
+# SPDX-License-Identifier: MIT
+
+services:
+  opc:
+    image: opc:dev
+    build:
+      dockerfile: Dockerfile
+      context: "./"
+    environment: 
+      CONFIG_TAGLIST: /config/taglist.yml
+      PORT: 4840
+    volumes: 
+      - ./config/taglist.yml:/config/taglist.yml:ro
+    ports:
+      - 4840:4840

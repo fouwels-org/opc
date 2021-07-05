@@ -21,7 +21,7 @@ type TagListMeta struct {
 type TagListTag struct {
 	Name         string
 	Namespace    string
-	Comment      string
-	OpcType      string `yaml:"opc_type"`
-	DefaultValue int    `yaml:"default_value"`
+	Description  string
+	Type         string
+	DefaultValue float64 `yaml:"default_value"`
 }
