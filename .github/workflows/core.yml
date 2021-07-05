@@ -1,0 +1,79 @@
+# SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
+#
+# SPDX-License-Identifier: MIT
+
+on:
+  push:
+name: Core
+env:
+  REGISTRY: registry2.lagoni.co.uk
+  REPO: ${{github.repository}}
+  GOSEC_VERSION: 2.8.1
+  STATICCHECK_VERSION: 2021.1
+  ARCH: linux_amd64
+jobs:
+  build-scan-and-publish:
+    runs-on: ubuntu-latest
+    name: Build, Scan, Publish
+    steps:
+      - name: Get vars
+        id: vars
+        run: echo ::set-output name=TAG::${GITHUB_REF##*/}
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Docker build
+        run: docker build -t ${{env.REGISTRY}}/${{env.REPO}}:${{steps.vars.outputs.TAG}} .
+
+      - name: Run container scan
+        uses: azure/container-scan@v0
+        with:
+          image-name: ${{env.REGISTRY}}/${{env.REPO}}:${{steps.vars.outputs.TAG}}
+          severity-threshold: LOW
+
+      - name: authenticate
+        run: echo ${{ secrets.REGISTRY_PASSWORD }} | docker login -u ${{ secrets.REGISTRY_USER }} --password-stdin $REGISTRY
+
+      - name: publish
+        run: docker push ${{env.REGISTRY}}/${{env.REPO}}:${{steps.vars.outputs.TAG}}
+
+  code-security:
+    runs-on: ubuntu-latest
+    name: Code Security (gosec)
+    steps:
+      - id: vars
+        run: echo ::set-output name=TAG::${GITHUB_REF##*/}
+
+      - name: Checkout repo
+        uses: actions/checkout@master
+
+      - name: Downloading and extracting gosec ${{env.GOSEC_VERSION}}
+        run: wget https://github.com/securego/gosec/releases/download/v${{env.GOSEC_VERSION}}/gosec_${{env.GOSEC_VERSION}}_${{env.ARCH}}.tar.gz -O gosec.tar.gz && tar -xzf gosec.tar.gz
+
+      - name: Run gosec/MITRE static security scanner (init)
+        run: cd ${GITHUB_WORKSPACE}/init && ${GITHUB_WORKSPACE}/gosec -exclude=G307,G306,G302,G204 ./...
+
+  static-check:
+    runs-on: ubuntu-latest
+    name: Code Security (staticcheck)
+    steps:
+      - id: vars
+        run: echo ::set-output name=TAG::${GITHUB_REF##*/}
+
+      - name: Checkout repo
+        uses: actions/checkout@master
+
+      - name: Downloading and extracting static check ${{env.GOSEC_VERSION}}
+        run: wget https://github.com/dominikh/go-tools/releases/download/${{env.STATICCHECK_VERSION}}/staticcheck_${{env.ARCH}}.tar.gz -O staticcheck.tar.gz && tar -xzf staticcheck.tar.gz
+
+      - name: Run static checks (init)
+        run: cd ${GITHUB_WORKSPACE} && ${GITHUB_WORKSPACE}/staticcheck/staticcheck ./...
+
+  licencing:
+    runs-on: ubuntu-latest
+    name: Licensing (SPDX)
+    steps:
+      - uses: actions/checkout@v2
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v1

@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
+#
+# SPDX-License-Identifier: MIT
+
+meta:
+  site: example
+  comment: example tag list
+tags:
+  - name: VALVE_OPEN
+    namespace: VAR
+    comment: Valve Tag (open)
+    opc_type: bool
+    default_value: 1
+
+  - name: VALVE_CLOSED
+    namespace: VAR
+    comment: Valve Tag (closed)
+    opc_type: bool
+    default_value: 0
+
+  - name: INT_FLOW
+    namespace: VAR
+    comment: Flow
+    opc_type: int16
+    default_value: 32767
