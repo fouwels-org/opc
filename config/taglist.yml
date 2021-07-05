@@ -53,3 +53,15 @@ tags:
     description: float64 flex
     type: float64
     default_value: -267
+
+  - name: FLOW_C
+    namespace: TAGS
+    description: uint16 flow
+    type: int16
+    default_value: -325
+
+  - name: FLOW_D
+    namespace: TAGS
+    description: uint16 flow
+    type: uint16
+    default_value: 325
