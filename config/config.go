@@ -15,6 +15,7 @@ func LoadConfig(taglist *os.File) (Config, error) {
 	c := Config{}
 
 	y := yaml.NewDecoder(taglist)
+	y.SetStrict(true)
 	err := y.Decode(&c.TagList)
 	if err != nil {
 		return Config{}, err
