@@ -40,10 +40,10 @@ tags:
     namespace: TEST
     description: test float64
     type: float64
-    default_value: 3.145
+    default_value: 3.1459
 
   - name: TEST_FLOAT32
     namespace: TEST
     description: test float32
     type: float32
-    default_value: 3.145
+    default_value: 3.1459

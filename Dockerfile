@@ -20,6 +20,10 @@ RUN cd open62541-${VERSION_OPEN62541}/out && cmake -DUA_ENABLE_AMALGAMATION=ON -
 RUN cd open62541-${VERSION_OPEN62541}/out && make && make install
 
 ENV GOBIN=/build/out
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
 COPY . ./go
 RUN cd go && go install .
 
