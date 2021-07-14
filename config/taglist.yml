@@ -47,3 +47,51 @@ tags:
     description: test float32
     type: float32
     default_value: 3.1459
+
+  - name: VALVE_OPEN
+    namespace: TAGS
+    description: Valve Open
+    type: bool
+    default_value: 0
+
+  - name: VALVE_CLOSE
+    namespace: TAGS
+    description: Valve Close
+    type: bool
+    default_value: 0
+
+  - name: VALVE_LIMIT_A
+    namespace: TAGS
+    description: Value Limit Switch A
+    type: bool
+    default_value: 0
+
+  - name: VALVE_LIMIT_B
+    namespace: TAGS
+    description: Value Limit Switch B
+    type: bool
+    default_value: 0
+
+  - name: VALVE_FLOW_A
+    namespace: TAGS
+    description: Valve Flow A
+    type: uint16
+    default_value: 0
+
+  - name: VALVE_FLOW_B
+    namespace: TAGS
+    description: Valve Flow B
+    type: uint16
+    default_value: 0
+
+  - name: VALVE_FLOW_C
+    namespace: TAGS
+    description: Valve Flow C
+    type: uint16
+    default_value: 0
+
+  - name: VALVE_PROPORTIONAL
+    namespace: TAGS
+    description: Valve Proportional
+    type: uint16
+    default_value: 0
