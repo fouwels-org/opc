@@ -19,18 +19,18 @@ RUN cd open62541-${VERSION_OPEN62541}/out && cmake -DUA_ENABLE_AMALGAMATION=ON -
     ..
 RUN cd open62541-${VERSION_OPEN62541}/out && make && make install
 
-ENV GOBIN=/build/out
+ENV GOBIN=/go/bin
 COPY go.mod .
 COPY go.sum .
 RUN go mod download
 
 COPY . ./go
-RUN cd go && go install .
+RUN cd go && go install ./...
 
 FROM alpine:3.15.0
-COPY --from=build /build/out /build/out
+COPY --from=build /go/bin /go/bin
 
 RUN addgroup -S opc && adduser -S opc -G opc
 USER opc
 
-CMD ["/build/out/opc"]
+CMD ["/go/bin/server"]

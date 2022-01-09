@@ -18,6 +18,10 @@ Supports the full range of OPC/UA types, as defined in `open62541/types.go`
 
 See Dockerfile for configured Open62541 build flags.
 
+## Security
+
+OPC/UA certificate implementations within Open62541 have not been tested, and no credit is assumed. The connection should be upgraded to (m)TLS externally in the deployment (nginx) with effective crypto.
+
 ## License
 MIT and/or MIT compatible
 
