@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
 #
 # SPDX-License-Identifier: MIT
-
+---
 services:
   opc:
     image: ghcr.io/fouwels/opc:dev
@@ -11,7 +11,12 @@ services:
     environment:
       CONFIG_TAGLIST: /config/taglist.yml
       PORT: 4840
-    volumes:
-      - ./config/taglist.yml:/config/taglist.yml:ro
+    configs:
+      - source: tag_list
+        target: /config/taglist.yml
     ports:
       - 4840:4840
+
+configs:
+  tag_list:
+    file: ./config/taglist.yml
