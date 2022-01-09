@@ -4,14 +4,14 @@
 
 services:
   opc:
-    image: registry2.lagoni.co.uk/lagoni-engineering/opc:dev
+    image: ghcr.io/fouwels/opc:dev
     build:
       dockerfile: Dockerfile
       context: "./"
-    environment: 
+    environment:
       CONFIG_TAGLIST: /config/taglist.yml
       PORT: 4840
-    volumes: 
+    volumes:
       - ./config/taglist.yml:/config/taglist.yml:ro
     ports:
       - 4840:4840

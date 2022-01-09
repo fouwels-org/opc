@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-FROM alpine:3.14.0 as build
+FROM alpine:3.15.0 as build
 
 # Install tools required for project
 RUN apk add go cmake make build-base
@@ -10,7 +10,7 @@ RUN apk add go cmake make build-base
 ENV VERSION_OPEN62541=1.2.2
 
 WORKDIR /build
-RUN wget -q -O open62541.tar.gz https://github.com/open62541/open62541/archive/refs/tags/v$VERSION_OPEN62541.tar.gz && tar -xzf open62541.tar.gz
+RUN wget -q -O open62541.tar.gz c/open62541/archive/refs/tags/v$VERSION_OPEN62541.tar.gz && tar -xzf open62541.tar.gz
 RUN mkdir -p open62541-${VERSION_OPEN62541}/out
 
 RUN apk add python3
@@ -27,7 +27,7 @@ RUN go mod download
 COPY . ./go
 RUN cd go && go install .
 
-FROM alpine:3.14.0
+FROM alpine:3.15.0
 COPY --from=build /build/out /build/out
 
 RUN addgroup -S opc && adduser -S opc -G opc

@@ -7,11 +7,12 @@ package main
 import (
 	"fmt"
 	"log"
-	"opc/config"
-	"opc/open62541"
 	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/fouwels/opc/config"
+	"github.com/fouwels/opc/open62541"
 )
 
 func main() {

@@ -2,9 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-COMPOSE=compose-cli compose
+COMPOSE=docker compose
 BUILDFILE=compose.yml
-DOCKER=docker
 
 build: Dockerfile
 	$(COMPOSE) -f $(BUILDFILE) build
