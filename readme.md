@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
+
+SPDX-License-Identifier: MIT
+-->
+
 # OPC/UA
 
 Go defined tag configurable OPC/UA server, using the Open62541 C99 OPC/UA library.
